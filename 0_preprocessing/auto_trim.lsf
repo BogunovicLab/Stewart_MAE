@@ -1,0 +1,18 @@
+#!/bin/bash
+  #BSUB -J fastp  ## Job name
+  #BSUB -P acc_ISDS ## This will change to your PI's account
+  #BSUB -q gpu ## queue to request resources on
+  #BSUB -n 10  ## number of nodes to request; if your process is threadable
+  #BSUB -R span[ptile=1] ## Where the nodes get spawned; here they're all spawinn on a single computer
+  #BSUB -R rusage[mem=64000] ## Amount of memory to request; for genome generation I generally use 35-40GB
+  #BSUB -W 12:00 ## Amount of wall-time to request; i.e. how long will the job run
+
+  #BSUB -o logs/%J.stdout ## Summary statistics of the completed job
+  #BSUB -eo logs/%J.stderr ## In case the job fails, I'd like to write the error toa file to troubleshoot
+  #BSUB -L /bin/bash ## Type of environment to load; in this case, we are working in the shell
+
+
+ml fastp
+source auto_trim.sh *.fastq
+
+## mv 
